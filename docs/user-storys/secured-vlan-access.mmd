@@ -1,0 +1,10 @@
+flowchart TD
+    A(["Device registered<br/>(MAB Registration Workflow)"]) --> B[User contacts IT]
+    B --> C[IT requests the MAC address]
+    C --> D[IT signs in to the admin dashboard]
+    D --> E{"Device found by MAC and<br/>registered to the right user?"}
+    E -- No --> X[Resolve with user, then retry]
+    E -- Yes --> F[Select device and assign private network]
+    F --> G["User releases IP, then<br/>forgets the wireless network"]
+    G --> H["User reconnects with credentials<br/>(same registered MAC)"]
+    H --> I([Device placed on secure network])

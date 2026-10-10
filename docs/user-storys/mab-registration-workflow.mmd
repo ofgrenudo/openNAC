@@ -1,0 +1,6 @@
+flowchart TD
+    A([User authenticates to the network]) --> B["Guest VLAN<br/>network access, no protected resources"]
+    B --> C[Browse to nac.your-org.com]
+    C --> D[Sign in with IdP]
+    D --> E{"Request access or<br/>register device"}
+    E --> F([Device registered with the NAC])

@@ -1,0 +1,20 @@
+flowchart TD
+    A([Client connects to private SSID]) --> B{802.1X auth OK?}
+    B -- No --> R[Access-Reject]
+    B -- Yes --> C{"MAC registered <i>to this user</i>,<br/>enabled, not expired?"}
+    C -- Yes --> T["VLAN 20<br/>Trusted / private"]
+    C -- No --> S["VLAN 30<br/>Standard"]
+    S --> D{"Register this device?<br/><i>(optional)</i>"}
+    D -- "No, skip" --> U["Remain on VLAN 30<br/>Standard access"]
+    D -- Yes --> P[Self-register via portal]
+    P --> V["Registration saved<br/>(MAC bound to user, enabled, expiry set)"]
+    V -. CoA re-auth .-> C
+
+    classDef reject fill:#fde2e2,stroke:#c0392b,color:#7a1f1f
+    classDef trusted fill:#dff5e3,stroke:#2e8b57,color:#1d5c39
+    classDef standard fill:#fff4d6,stroke:#c9a227,color:#6b5512
+    classDef optional fill:#e3eefc,stroke:#2f6db5,color:#1b3f6b,stroke-dasharray: 4 3
+    class R reject
+    class T trusted
+    class S,U,P,V standard
+    class D optional

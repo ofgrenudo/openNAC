@@ -1,0 +1,6 @@
+- https://en.wikipedia.org/wiki/IEEE_802.1X
+- https://www.freeradius.org/
+- https://en.wikipedia.org/wiki/Protocol_for_Carrying_Authentication_for_Network_Access
+- https://www.ietf.org/rfc/rfc2865.txt?number=2865
+- https://docs.ruckuswireless.com/smartzone/3.6.1/sz100-vsze-administrator-guide/GUID-1E16C88B-6D90-4538-901A-00EFABCBF13A.html 
+- https://networkjourney.com/from-zero-to-secure-802-1x-mab-cli-walkthrough-with-labs-ccnp-enterprise/
