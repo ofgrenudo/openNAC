@@ -1,0 +1,25 @@
+mschap {
+	pool {
+		start = ${thread[pool].start_servers}
+		min = ${thread[pool].min_spare_servers}
+		max = ${thread[pool].max_servers}
+		spare = ${thread[pool].max_spare_servers}
+		uses = 0
+		retry_delay = 30
+		lifetime = 86400
+		cleanup_interval = 300
+		idle_timeout = 600
+	}
+	# Delegates the NT hash check to Winbind, which is what knows how to talk
+	# to AD for it (AD does not expose the hash over LDAP). See docs/ad-integration.md.
+	# __WORKGROUP__ is substituted by entrypoint.sh with the joined domain's
+	# NetBIOS name. Hardcoded rather than read from the client's NT-Domain:
+	# 802.1X supplicants essentially never send a domain-qualified username,
+	# and this FreeRADIUS's xlat default (`%{attr:-default}`) silently stays
+	# empty when the attribute is missing rather than using the default, so a
+	# fallback via that syntax doesn't work here. Single-domain assumption —
+	# revisit if this ever needs to serve more than one AD domain.
+	ntlm_auth = "/usr/bin/ntlm_auth --request-nt-key --domain=__WORKGROUP__ --username=%{mschap:User-Name} --challenge=%{mschap:Challenge:-00} --nt-response=%{mschap:NT-Response:-00}"
+	passchange {
+	}
+}

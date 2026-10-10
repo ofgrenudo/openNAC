@@ -1,0 +1,5 @@
+source "https://rubygems.org"
+
+# Matches what GitHub Pages itself builds with, so a local `make docs` behaves
+# the same as the deployed site (includes jekyll-remote-theme, jekyll-relative-links).
+gem "github-pages", group: :jekyll_plugins

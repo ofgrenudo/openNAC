@@ -1,0 +1,15 @@
+title: openNAC Docs
+description: Documentation for openNAC, an open-source Network Access Control project.
+remote_theme: just-the-docs/just-the-docs
+
+plugins:
+  - jekyll-remote-theme
+  - jekyll-relative-links
+
+relative_links:
+  enabled: true
+  collections: true
+
+aux_links:
+  "openNAC on GitHub":
+    - "https://github.com/ofgrenudo/openNAC"
