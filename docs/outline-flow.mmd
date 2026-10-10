@@ -1,0 +1,13 @@
+flowchart TD
+    A([802.1X authentication]) -- no --> R[Reject]
+    A -- yes --> B{"MAC registered <i>to this user</i>,<br/>enabled, not expired?"}
+    B -- yes --> T["VLAN 20<br/>Trusted / private"]
+    B -- no --> S["VLAN 30<br/>Standard"]
+    S --> P[Self-register via portal]
+
+    classDef reject fill:#fde2e2,stroke:#c0392b,color:#7a1f1f
+    classDef trusted fill:#dff5e3,stroke:#2e8b57,color:#1d5c39
+    classDef standard fill:#fff4d6,stroke:#c9a227,color:#6b5512
+    class R reject
+    class T trusted
+    class S,P standard

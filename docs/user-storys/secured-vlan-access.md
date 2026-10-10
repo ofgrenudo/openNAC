@@ -1,3 +1,9 @@
+---
+title: Secured VLAN Access
+parent: User Stories
+nav_order: 3
+---
+
 # User Story: Secured VLAN Access
 
 ## Story
@@ -8,7 +14,7 @@ As an **IT admin**, I want to approve a device from the admin dashboard and assi
 
 ## Prerequisite
 
-The user has already registered the device through the [MAB Registration Workflow](mab-registration-workflow.md).
+The user has already registered the device — through [Optional Registration](optional-registration) or [Mandatory Registration](mandatory-registration). It doesn't matter which; this story only needs the device to already be registered to the user.
 
 ## Flow
 
@@ -20,18 +26,9 @@ The user has already registered the device through the [MAB Registration Workflo
 6. IT tells the user to release their device's IP, then disconnect from the wireless network (forget the network credentials).
 7. The user reconnects to the wireless network with their credentials, using the same, already registered MAC address, and lands on the secure network.
 
-```mermaid
-flowchart TD
-    A(["Device registered<br/>(MAB Registration Workflow)"]) --> B[User contacts IT]
-    B --> C[IT requests the MAC address]
-    C --> D[IT signs in to the admin dashboard]
-    D --> E{"Device found by MAC and<br/>registered to the right user?"}
-    E -- No --> X[Resolve with user, then retry]
-    E -- Yes --> F[Select device and assign private network]
-    F --> G["User releases IP, then<br/>forgets the wireless network"]
-    G --> H["User reconnects with credentials<br/>(same registered MAC)"]
-    H --> I([Device placed on secure network])
-```
+![secured-vlan-access](secured-vlan-access.png)
+
+Source: [`secured-vlan-access.mmd`](secured-vlan-access.mmd)
 
 ## Acceptance criteria
 

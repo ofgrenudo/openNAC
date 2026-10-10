@@ -1,4 +1,17 @@
 services:
+  # Dev-only stand-in for the workplace AD domain. See docs/ad-integration.md
+  # for what changes to point this at the real domain instead.
+  dc:
+    image: nowsci/samba-domain
+    platform: linux/amd64
+    privileged: true          # required by this image for ACL/xattr handling
+    environment:
+      DOMAIN: ${AD_DOMAIN:-DEV.OPENNAC.LOCAL}
+      DOMAINPASS: ${AD_ADMIN_PASSWORD:?set AD_ADMIN_PASSWORD in .env}
+      NOCOMPLEXITY: "true"
+    volumes:
+      - dc-data:/var/lib/samba
+
   db:
     image: postgres:16
     environment:
@@ -7,6 +20,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD:?set DB_PASSWORD in .env}
     volumes:
       - db-data:/var/lib/postgresql/data
+      - ./docker/db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U opennac -d opennac"]
       interval: 5s
@@ -16,21 +30,32 @@ services:
   freeradius:
     build: ./docker/freeradius
     platform: linux/amd64
+    privileged: true          # winbind/samba need this for the domain join
+    hostname: opennac-radius  # Samba's computer account is named after this (NetBIOS
+                               # caps it at 15 chars); a random per-container hostname
+                               # would orphan the persisted join on every recreate
     command: ["-X"]          # debug output; remove for production
     depends_on:
       db:
         condition: service_healthy
+      dc:
+        condition: service_started
     environment:
       DB_HOST: db
       DB_NAME: opennac
       DB_USER: opennac
       DB_PASSWORD: ${DB_PASSWORD}
+      AD_DOMAIN: ${AD_DOMAIN:-DEV.OPENNAC.LOCAL}
+      AD_ADMIN_PASSWORD: ${AD_ADMIN_PASSWORD}
     ports:
       - "1812:1812/udp"
       - "1813:1813/udp"
       - "3799:3799/udp"
-    # volumes:
-    #   - ./docker/freeradius/raddb:/etc/freeradius   # enable once raddb/ exists
+    volumes:
+      - freeradius-samba:/var/lib/samba   # persists the domain join across restarts
+      # - ./docker/freeradius/raddb:/etc/freeradius   # enable once raddb/ exists
 
 volumes:
   db-data:
+  dc-data:
+  freeradius-samba:

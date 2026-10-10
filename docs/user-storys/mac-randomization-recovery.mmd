@@ -1,0 +1,13 @@
+flowchart TD
+    A([Device reconnects with a new/rotated MAC]) --> B{"MAC registered?"}
+    B -- No --> C["Falls back to Standard/Registration<br/>(as if never registered)"]
+    C --> D[User notices lost access, opens portal]
+    D --> E["Portal: set Wi-Fi privacy to Fixed,<br/>then re-register"]
+    E --> F[User fixes the MAC setting]
+    F --> G[User re-registers]
+    G --> H([Trusted access restored])
+
+    classDef standard fill:#fff4d6,stroke:#c9a227,color:#6b5512
+    classDef trusted fill:#dff5e3,stroke:#2e8b57,color:#1d5c39
+    class C standard
+    class H trusted

@@ -1,0 +1,14 @@
+flowchart TD
+    A([Expiry policy: on]) --> B[User self-registers device]
+    B --> C["expires_at set per policy"]
+    C --> D{"expires_at in the future?"}
+    D -- Yes --> E["Trusted"]
+    E --> D
+    D -- No --> F["Falls back to Standard/Registration"]
+    F --> G[User re-registers]
+    G --> C
+
+    classDef trusted fill:#dff5e3,stroke:#2e8b57,color:#1d5c39
+    classDef standard fill:#fff4d6,stroke:#c9a227,color:#6b5512
+    class E trusted
+    class F standard

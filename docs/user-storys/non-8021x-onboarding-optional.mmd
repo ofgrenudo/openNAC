@@ -1,0 +1,11 @@
+flowchart TD
+    A([Device connects, no 802.1X supplicant]) --> B["Switch/AP sends MAB request<br/>(MAC as username)"]
+    B --> C{"MAC registered?"}
+    C -- No --> D["Standard / guest VLAN<br/>same default as an unregistered user"]
+    C -- Yes --> E["VLAN/role assigned to that MAC"]
+    D -. Admin finds and registers the MAC .-> C
+
+    classDef standard fill:#fff4d6,stroke:#c9a227,color:#6b5512
+    classDef trusted fill:#dff5e3,stroke:#2e8b57,color:#1d5c39
+    class D standard
+    class E trusted

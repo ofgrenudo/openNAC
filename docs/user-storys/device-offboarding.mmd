@@ -1,0 +1,11 @@
+flowchart TD
+    A([Admin decides to revoke]) --> B{"Revoke one device<br/>or all for a user?"}
+    B -- One device --> C[Disable/delete that MAC's registration]
+    B -- All devices --> D[Disable/delete all of the user's registrations]
+    C --> E[Send CoA / Disconnect]
+    D --> E
+    E --> F[Device re-authenticates]
+    F --> G["MAC lookup fails<br/>Standard / Registration"]
+
+    classDef standard fill:#fff4d6,stroke:#c9a227,color:#6b5512
+    class G standard

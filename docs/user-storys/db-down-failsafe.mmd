@@ -1,0 +1,9 @@
+flowchart TD
+    A([802.1X authentication succeeds]) --> B[Post-auth MAC lookup]
+    B --> C{"Device database reachable?"}
+    C -- Yes --> D["Normal outcome<br/>(Trusted or Standard)"]
+    C -- No --> E["Lookup returns empty<br/>Standard/Registration, fail safe"]
+    E --> F[Admin alerted]
+
+    classDef standard fill:#fff4d6,stroke:#c9a227,color:#6b5512
+    class E standard

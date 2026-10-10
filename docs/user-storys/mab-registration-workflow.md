@@ -1,3 +1,10 @@
+---
+title: MAB Registration Workflow
+parent: Optional Registration
+grand_parent: User Stories
+nav_order: 2
+---
+
 # User Story: MAB Registration Workflow
 
 ## Story

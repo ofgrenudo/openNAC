@@ -1,3 +1,10 @@
+---
+title: NAC Workflow
+parent: Optional Registration
+grand_parent: User Stories
+nav_order: 1
+---
+
 # NAC Workflow
 
 This describes what happens when a client connects to the private SSID, and how optional device registration moves a client from standard to trusted access. The diagram is in [`nac-workflow.mmd`](nac-workflow.mmd) (rendered: [`nac-workflow.png`](nac-workflow.png)).

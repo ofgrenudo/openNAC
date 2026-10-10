@@ -1,0 +1,15 @@
+flowchart TD
+    A([Device connects to the network]) --> B["Registration VLAN<br/>no internet, portal only"]
+    B --> C{"Device registered<br/>to this user?"}
+    C -- No --> D[Open registration portal]
+    D --> E[Sign in with IdP]
+    E --> F[Register device]
+    F -. CoA re-auth .-> C
+    C -- Yes --> G["Internet access<br/>(Standard or Trusted VLAN)"]
+
+    classDef registration fill:#fde2e2,stroke:#c0392b,color:#7a1f1f
+    classDef portal fill:#fff4d6,stroke:#c9a227,color:#6b5512
+    classDef granted fill:#dff5e3,stroke:#2e8b57,color:#1d5c39
+    class B registration
+    class D,E,F portal
+    class G granted
